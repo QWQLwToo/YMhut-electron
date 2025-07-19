@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎使用</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0071E3', // 苹果蓝
+                        secondary: '#1D1D1F', // 深空灰
+                        neutral: '#F5F5F7', // 浅灰背景
+                        'neutral-dark': '#86868B', // 次要文本
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .apple-btn {
+                @apply bg-primary text-white rounded-full transition-all duration-300 hover:bg-primary/90 active:bg-primary/80 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2;
+            }
+            .float-animation {
+                animation: float 6s ease-in-out infinite;
+            }
+            .fade-in {
+                animation: fadeIn 0.6s ease-out forwards;
+            }
+            @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-8px); }
+            }
+            @keyframes fadeIn {
+                0% { opacity: 0; transform: translateY(10px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+        }
+    </style>
+</head>
+<body class="bg-neutral min-h-screen flex items-center justify-center p-4 font-inter text-secondary antialiased">
+    <div class="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden fade-in border border-gray-100">
+        <!-- 内容区域 -->
+        <div class="p-8 sm:p-10">
+            <!-- 图标 -->
+            <div class="flex justify-center mb-6">
+                <div class="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center float-animation">
+                    <i class="fa fa-paper-plane-o text-4xl text-primary"></i>
+                </div>
+            </div>
+            
+            <!-- 标题 -->
+            <h1 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-2 text-secondary">欢迎使用【软件名】</h1>
+            <p class="text-neutral-dark text-center mb-8 opacity-90 text-sm sm:text-base">【当前为测试此功能的版本】</p>
+            
+            <!-- 表情内容 -->
+            <div class="flex justify-center mb-10">
+                <p id="content" class="text-[clamp(2rem,5vw,3rem)] tracking-wider fade-in" style="animation-delay: 0.2s">😊😊😊😊😊</p>
+            </div>
+            
+            <!-- 倒计时按钮 -->
+            <div class="flex justify-center">
+                <button id="closeBtn" class="apple-btn px-8 py-3.5 w-full sm:w-auto sm:px-10 text-sm sm:text-base font-medium flex items-center justify-center gap-2">
+                    <span>我知道了</span>
+                    <span id="countdown" class="ml-1 bg-white/20 px-2.5 py-0.5 rounded-full text-xs sm:text-sm">5</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let countdown = 5;
+    const closeBtn = document.getElementById('closeBtn');
+    const countdownEl = document.getElementById('countdown');
+    let intervalId;
+
+    function updateButtonText() {
+        countdownEl.textContent = countdown;
+    }
+
+    function startCountdown() {
+        intervalId = setInterval(() => {
+            countdown--;
+            updateButtonText();
+
+            if (countdown <= 0) {
+                clearInterval(intervalId);
+                // 添加按钮点击效果
+                closeBtn.classList.add('opacity-70');
+                setTimeout(() => {
+                    window.electronAPI.closeSetupWindow(); // 调用 expose 的方法
+                }, 500);
+            }
+        }, 1000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateButtonText();
+        startCountdown();
+
+        closeBtn.addEventListener('click', () => {
+            clearInterval(intervalId); // 清除定时器
+            // 添加按钮点击效果
+            closeBtn.classList.add('scale-95');
+            setTimeout(() => {
+                window.electronAPI.closeSetupWindow(); // 关闭窗口
+            }, 200);
+        });
+    });
+</script>
+</body>
+</html>
+    

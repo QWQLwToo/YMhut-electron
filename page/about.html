@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./node_modules/nprogress/nprogress.css">
+
+    <title>关于 - 弈鸣小筑</title>
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #7f8c8d;
+            --accent-color: #3498db;
+        }
+
+        body {
+            /* font-family: "Microsoft YaHei", "PingFang SC", sans-serif; */
+            line-height: 1.5;
+            color: var(--primary-color);
+            background: #f5f6fa;
+            margin: 0;
+            padding: 15px;
+            width: 390px;
+            height: 260px;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0 0 15px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+
+        .info-item {
+            margin: 12px 0;
+            font-size: 1rem;
+            color: #000;
+        }
+
+        .info-item strong {
+            color: var(--accent-color);
+            display: inline-block;
+            min-width: 60px;
+        }
+
+        .electron-tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-top: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 暗黑模式适配 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #2c3e50;
+            }
+
+            .container {
+                background: rgba(0, 0, 0, 0.3);
+            }
+
+            h1,
+            .info-item {
+                color: #ecf0f1;
+            }
+
+            .electron-tag {
+                background: #2980b9;
+            }
+
+            .contact-button {
+                background-color: var(--accent-color);
+            }
+
+            .contact-button:hover {
+                background-color: #2563eb;
+                box-shadow: 0 4px 8px rgba(41, 128, 185, 0.4);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>弈鸣小筑</h1>
+
+        <div class="info-item">
+            <strong>版本</strong> 版本号
+        </div>
+
+        <div class="info-item">
+            <strong>版权所有</strong>  © 2025
+        </div>
+
+        <div class="info-item">
+            <strong>技术架构</strong> <br>
+            Electron + node
+            <br>
+            <span class="electron-tag">桌面应用</span>
+        </div>
+
+        <div class="info-item" style="margin-top: 18px; color: var(--secondary-color);">
+            <small>联系我们：</small><br>
+            <a class="contact-button" href="mailto:">发送邮件</a>
+        </div>
+    </div>
+
+    <!-- 引入 NProgress JS -->
+    <script src="./node_modules/nprogress/nprogress.js"></script>
+    <script>
+        window.NProgress.configure({ showSpinner: false });
+        window.NProgress.start();
+
+        window.addEventListener('DOMContentLoaded', () => {
+            window.NProgress.done();
+        });
+    </script>
+</body>
+
+</html>

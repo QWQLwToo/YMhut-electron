@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>更新日志</title>
+  <link rel="stylesheet" href="./assets/css/ttf.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff; /* 白色字体 */
+      overflow: hidden;
+      position: relative;
+      background: transparent; /* 确保背景透明 */
+    }
+
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    video {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glass-container {
+      width: 70%;
+      max-width: 800px;
+      height: 80%;
+      max-height: 600px;
+      background: rgba(255, 255, 255, 0.2); /* 提高透明度以便更清楚地看到背景视频 */
+      backdrop-filter: blur(3px); /* 轻微模糊效果 */
+      border-radius: 12px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+      opacity: 0;
+      transform: scale(0.95);
+      animation: fadeInUp 0.6s ease forwards;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .header {
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff; /* 白色字体 */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 增加对比度 */
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #fff; /* 白色字体 */
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: 'Courier New', monospace;
+      background-color: transparent;
+      padding: 0;
+      border-left: none;
+      box-shadow: none;
+      color: #fff; /* 白色字体 */
+    }
+
+    /* 滚动条自定义样式 */
+    .content::-webkit-scrollbar {
+      width: 8px;
+    }
+    .content::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.5); /* 白色滚动条 */
+      border-radius: 4px;
+    }
+    .content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 视频背景 -->
+<div class="video-background">
+  <video id="bg-video" autoplay muted loop playsinline>
+    <!-- 尝试加载本地视频文件 -->
+    <source src="../assets/video/wap.mp4" type="video/mp4">
+    <!-- 如果本地文件不可用，则加载在线视频 -->
+    <source src="https://search.ymhut.cn/wap.mp4" type="video/mp4">
+    您的浏览器不支持HTML5视频。
+  </video>
+</div>
+
+<!-- 移除了遮罩层 -->
+<div class="glass-container" id="glassBox">
+  <div class="header">更新日志</div>
+  <div class="content">
+    <pre id="logContent">正在加载中...</pre>
+  </div>
+</div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const glassBox = document.getElementById('glassBox');
+    const bgVideo = document.getElementById('bg-video');
+
+    // 监听视频加载错误事件，如果本地视频加载失败，则切换到在线视频源
+    bgVideo.addEventListener('error', () => {
+      bgVideo.src = "https://";
+    });
+
+    // 设置延迟显示内容
+    setTimeout(() => {
+      glassBox.style.opacity = '1';
+      glassBox.style.transform = 'scale(1)';
+      
+      // 加载更新日志内容
+      window.api.loadChangelog().then(content => {
+        document.getElementById('logContent').textContent = content;
+      }).catch(err => {
+        document.getElementById('logContent').textContent = '无法加载更新日志。\n' + err;
+      });
+    }, 500); // 延迟500毫秒后显示内容
+  });
+</script>
+
+</body>
+</html>

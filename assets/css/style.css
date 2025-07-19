@@ -1,0 +1,57 @@
+/* assets/css/style.css */
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar-track {
+        background: #333;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #aaa;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #ccc;
+    }
+}
+
+/* NProgress 样式优化 */
+#nprogress {
+    pointer-events: none;
+}
+
+#nprogress .bar {
+    background: #3498db !important; /* 主色调 */
+    height: 3px;
+    position: fixed;
+    z-index: 999999;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+#nprogress .peg {
+    display: none;
+}
+
+#nprogress .spinner {
+    display: none;
+}

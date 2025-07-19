@@ -1,0 +1,47 @@
+{
+  "name": "你的标题名",
+  "version": "版本号",
+  "description": "文档描述",
+  "author": "作者",
+  "main": "main.js", 
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "dependencies": {
+    "axios": "^1.1.3",
+    "node-addon-api": "^8.3.1",
+    "nprogress": "^0.2.0",
+    "update-electron-app": "^3.1.1"
+  },
+  "devDependencies": {
+    "electron": "^23.3.13",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "ymhut.cn",
+    "productName": "弈鸣小筑",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "package.json",
+      "page/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/img/favicon.ico"
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "installerIcon": "assets/img/favicon.ico",
+      "uninstallerIcon": "assets/img/favicon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
